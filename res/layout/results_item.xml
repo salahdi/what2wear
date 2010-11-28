@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent" 
+              android:layout_height="fill_parent" 
+              android:orientation="vertical" >
+
+    <ImageButton
+	android:id="@+id/logo_button"  
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginBottom="30dip"
+    android:src="@drawable/what2wear2"
+    android:background="#000000" />	
+    
+    <ImageSwitcher
+		android:id="@+id/image_display"
+		android:layout_above="@+id/gallery"
+		android:layout_below="@+id/logo_button"
+		android:layout_centerInParent="true"
+		android:layout_centerVertical = "true"
+		android:layout_centerHorizontal="true"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="10dip" />
+		
+	<Gallery 
+    	android:id="@+id/gallery"
+    	android:layout_width="fill_parent"
+    	android:layout_height="50dp"
+    	android:layout_above= "@+id/rate_text"
+    	android:gravity="center_vertical"
+         />
+		
+	<TextView
+		android:id="@+id/item_prop1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above= "@+id/item_prop2"
+		android:layout_alignParentRight="true"
+		android:text="description of gender" />
+		
+	<TextView
+		android:id="@+id/item_prop2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above= "@+id/item_prop3"
+		android:layout_alignParentRight="true"
+		android:text="description of season" />
+		
+	<TextView
+		android:id="@+id/item_prop3"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentBottom="true"
+		android:text="description of style" />
+	
+	<TextView
+		android:id="@+id/rate_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above= "@+id/my_rating_bar"
+		android:layout_alignParentLeft="true"
+		android:text="Current rate: " />
+		
+		<RatingBar  android:id="@+id/my_rating_bar"
+			style="@style/RatingBar"
+			android:numStars ="5"
+			android:stepSize="0.5"
+			android:background="#000"
+			android:layout_alignParentBottom="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+
+    
+</RelativeLayout> 

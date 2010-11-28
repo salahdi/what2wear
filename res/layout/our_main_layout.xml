@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+
+xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent" 
+              android:layout_height="fill_parent" 
+              android:orientation="vertical" >
+<ImageButton
+	android:id="@+id/logo_button"  
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginBottom="30dip"
+    android:src="@drawable/what2wear2"
+    android:background="#000000"
+    />
+	
+	<Button
+	android:id="@+id/go_to_search_by_item"
+    android:layout_below="@+id/logo_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:padding="10dp"
+    android:background="@drawable/custom_button1" />
+    
+    <Button
+	android:id="@+id/go_to_search_by_weather"
+   	android:layout_below="@+id/go_to_search_by_item"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:padding="10dp"
+    android:background="@drawable/custom_button2" />
+    
+    <Button
+	android:id="@+id/go_to_upload"
+	android:layout_below="@+id/go_to_search_by_weather"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:padding="10dp"
+    android:background="@drawable/custom_button3" />
+
+            
+</RelativeLayout>
