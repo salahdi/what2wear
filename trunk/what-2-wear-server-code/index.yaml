@@ -1,0 +1,8 @@
+indexes:
+
+- kind: ImageStruct
+  ancestor: no
+  properties:
+  - name: avg_image_rating
+    direction: asc
+  - name: subject_gender

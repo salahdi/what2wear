@@ -8,35 +8,39 @@ from google.appengine.ext import db
 #from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
-#from google.appengine.ext.webapp import template
 from google.appengine.api import images
-#from google.appengine.api import urlfetch
+from google.appengine.ext import webapp
 from django.utils import simplejson
 import models
+
 
 logging.getLogger().setLevel(logging.DEBUG)
 
 class MainPage(webapp.RequestHandler):
     
     def get(self):
-        self.response.out.write("""<html><body>
-                                    welcome
-                                    </body></html>""")
+	self.response.headers['Content-Type'] = 'text/html'
+        self.response.out.write("""<html><body>Welcome!<br>""")
 
-        #self.response.out.write("""<html><body>
-        #                            admin: in order to load data please press the load button<br>
-        #                            <div class="mybutton">    
-        #                            <button onclick="window.location='/loadImages'" 
-        #                            style="width:80;height:24">Load</button><br> 
-        #                            </div>
-        #                            </body></html>""")
+        self.response.out.write("""in order to load data please press the load button:<br>
+                                   <div class="mybutton">    
+                                   <button onclick="window.location='/loadImages'" 
+                                   style="width:80;height:24">load</button><br> 
+                                   </div>""")
+        self.response.out.write("""in order to clear all data please press the clear button:<br>
+                                   <div class="mybutton">    
+                                   <button onclick="window.location='/clearImages'" 
+                                   style="width:80;height:24">clear</button><br> 
+                                   </div>
+                                   </body></html>""")
+
 
         
-class GetImageByKeyID (webapp.RequestHandler):
-    
+class GetImageByKeyID (webapp.RequestHandler):    
     def get(self):
         """this method receives an image id key and return the url address of the suitable image"""
         image_struct = db.get(self.request.get("key_id"))
+	self.response.out.write("""<html><body>here</body></html>""")
         if image_struct.image:       
             self.response.headers['Content-Type'] = "application/json" 
             return_str = []
@@ -74,15 +78,14 @@ class SearchInDataStore(webapp.RequestHandler):
         """create the list that will be returned from the request (in json format)"""
         imageList = []
 
-        """filter according to gender"""
-        all_images = models.ImageStruct.gql("WHERE subject_gender = :1", gender)
+        """filter according to gender and sort in ascending order"""
+        all_images = models.ImageStruct.gql("WHERE subject_gender = :1 ORDER BY avg_image_rating ASC", gender)
         """filter according to style, if needed"""
         if (style != ''):
             all_images.filter("style =", style)
         """filter according to season, if needed"""
         if (season != ''):
             all_images.filter("season =", season)
-        all_images.order('-avg_image_rating')
         """filter according to items"""
         for cur_image in all_images:
             image_items = cur_image.itemstruct_set
@@ -97,17 +100,9 @@ class SearchInDataStore(webapp.RequestHandler):
                         suitable = suitable + 1
                         break;  
             if suitable == items_num:
-                tempZip = zip(["post"], [cur_image.get_dict()])
-                tempDict = dict(tempZip)
-                imageList.append(tempDict)
-                #imageList.append(cur_image.get_dict())
-
-        postsZip = zip(["posts"], [imageList])
-        postsDict = dict(postsZip)
+                imageList.append(cur_image.to_dict())
         self.response.headers['Content-Type'] = "application/json"
-        self.response.out.write(simplejson.dumps(postsDict))
-#        self.response.headers['Content-Type'] = "application/json"
-#        self.response.out.write(simplejson.dumps(imageList))        
+        self.response.out.write(simplejson.dumps(imageList))        
 #        else:
         #    self.error(404)
         #    self.response.out.write('No such player')
@@ -127,10 +122,9 @@ class UpdateRating:
         
         """send the updated rating to the caller"""
         self.response.headers['Content-Type'] = "application/json" 
-        return_str = []
-        return_str[0] = {"rating_id" : image_struct.avg_image_rating}
+        return_str= [{"rating_id" : image_struct.avg_image_rating}]
         self.response.out.write(simplejson.dumps(return_str))
-        
+
 
 application = webapp.WSGIApplication([
     ('/', MainPage),

@@ -15,11 +15,11 @@ class ImageStruct(db.Model):
     def to_dict(self):
         """ this method returns a dictionary of some of the properties above """
         d = {}
-        d['key_id'] = str(self.key()),
-        d['gender_id'] = str(self.subject_gender),
-        d['season_id'] = str(self.season),
-        d['style_id'] = str(self.style),
-        d['rating_id'] = str(self.avg_image_rating),
+        d['key_id'] = str(self.key())
+        d['gender_id'] = self.subject_gender
+        d['season_id'] = self.season
+        d['style_id'] = self.style
+        d['rating_id'] = str(self.avg_image_rating)
         d['items_num_id'] = str(self.items_num)
         # add the items to the dictionary
         i = 1
@@ -36,7 +36,7 @@ class ItemStruct(db.Model):
                                                                  'Light Green', 'Turquoise', 'Purple',
                                                                  'Light Purple', 'Red', 'Pink', 'Yellow',
                                                                  'Brown', 'Beige', 'Mastered', 'White', 'Multi-colored',
-								 'Dark Blue', 'Scarlet']))
+                                 'Dark Blue', 'Scarlet']))
     image_struct = db.ReferenceProperty(ImageStruct, required=True)
     
     
