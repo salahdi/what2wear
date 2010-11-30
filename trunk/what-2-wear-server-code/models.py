@@ -1,4 +1,6 @@
 from google.appengine.ext import db
+from google.appengine.api import images
+
 
 class ImageStruct(db.Model):
     #uploader_user = db.UserProperty() #delete this property???
@@ -16,6 +18,7 @@ class ImageStruct(db.Model):
         """ this method returns a dictionary of some of the properties above """
         d = {}
         d['key_id'] = str(self.key())
+        #d['url_id'] = "http://what-2-wear.appspot.com/img?key_id=%s" % self.key()
         d['gender_id'] = self.subject_gender
         d['season_id'] = self.season
         d['style_id'] = self.style
@@ -27,16 +30,17 @@ class ImageStruct(db.Model):
             d.update(item.to_dict(i))
             i = i + 1
         return d
+
     
 class ItemStruct(db.Model):
     item_type = db.StringProperty(default = 'Coat', choices = set(['Coat', 'Jacket', 'Dress', 'Skirt', 'Trousers',
-                                                                'Jeans', 'Knitwear', 'Shirt', 'T-Shirt',
-                                                                'Shoes', 'Scarf']))
+                                                                   'Jeans', 'Knitwear', 'Shirt', 'T-Shirt',
+                                                                   'Shoes', 'Scarf']))
     item_color = db.StringProperty(default = 'Black', choices = set(['Black', 'Blue', 'Light Blue', 'Green', 'Grey',
-                                                                 'Light Green', 'Turquoise', 'Purple',
-                                                                 'Light Purple', 'Red', 'Pink', 'Yellow',
-                                                                 'Brown', 'Beige', 'Mastered', 'White', 'Multi-colored',
-                                 'Dark Blue', 'Scarlet']))
+                                                                     'Light Green', 'Turquoise', 'Purple',
+                                                                     'Light Purple', 'Red', 'Pink', 'Yellow',
+                                                                     'Brown', 'Beige', 'Mastered', 'White', 'Multi-colored',
+                                                                     'Dark Blue', 'Scarlet']))
     image_struct = db.ReferenceProperty(ImageStruct, required=True)
     
     
@@ -47,3 +51,4 @@ class ItemStruct(db.Model):
         d["item" + str(index) + "_type_id"] = self.item_type      
         d["item" + str(index) + "_color_id"] = self.item_color
         return d
+    
