@@ -2,8 +2,6 @@ import logging
 
 #import cgi
 #import sys #import sys module for printing to stdout
-
-
 from google.appengine.ext import db
 #from google.appengine.api import users
 from google.appengine.ext import webapp
@@ -21,16 +19,14 @@ class MainPage(webapp.RequestHandler):
         
         
         """this method is for testing purpose only and will be deleted!!!"""
-        self.response.out.write('<html><body>')
+#        self.response.out.write('<html><body>')
         """display a html form"""
-        values = {"try1": [1]}
-        self.response.out.write(template.render('main.html', values))
-        self.response.out.write("""</body></html>""")
+#        values = {"try1": [1]}
+#        self.response.out.write(template.render('main.html', values))
+#        self.response.out.write("""</body></html>""")
         
-        
-        
-        self.response.headers['Content-Type'] = 'text/html'
-        self.response.out.write("""<html><body>Welcome!<br>""")
+#        self.response.headers['Content-Type'] = 'text/html'
+#        self.response.out.write("""<html><body>Welcome!<br>""")
 
         self.response.out.write("""in order to load data please press the load button:<br>
                                    <div class="mybutton">    
@@ -107,7 +103,7 @@ class SearchInDataStore(webapp.RequestHandler):
         self.response.out.write(simplejson.dumps(imageList))        
 #        else:
         #    self.error(404)
-        #    self.response.out.write('No such player')
+        #    self.response.out.write('   ')
                
 class UpdateRating:
     def post(self):
@@ -131,7 +127,7 @@ class GetImageByKeyID (webapp.RequestHandler):
     def get(self):
         """this method receives an image id key and return the url address of the suitable image"""
         image_struct = db.get(self.request.get("key_id"))
-        if image_struct and image_struct.image:
+        if image_struct.image:
             self.response.headers['Content-Type'] = "image/jpg"
             self.response.out.write(image_struct.image)
         else:
