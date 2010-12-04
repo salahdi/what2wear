@@ -7,6 +7,7 @@ from google.appengine.api import users
 from google.appengine.ext.webapp.util import login_required
 import models
 
+
 class LoadImages(webapp.RequestHandler):
     @login_required
     def get(self):
@@ -61,9 +62,11 @@ class ClearImages(webapp.RequestHandler):
 	else:
 	        """clear all data store"""
         	allImages = models.ImageStruct.all()
-	        db.delete(allImages)
+		if allImages:
+	        	db.delete(allImages)
 	        allItems = models.ItemStruct.all()
-	        db.delete(allItems)
+		if allItems:
+	        	db.delete(allItems)
                 self.response.out.write("""all data has been deleted<br>""")
 	self.response.out.write("""<div class="mybutton">    
                                    <button onclick="window.location='/'" 
