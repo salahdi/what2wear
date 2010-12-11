@@ -8,6 +8,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from django.utils import simplejson
 from google.appengine.ext.webapp import template
+from google.appengine.api import images
 import models
 
 
@@ -16,17 +17,15 @@ logging.getLogger().setLevel(logging.DEBUG)
 class MainPage(webapp.RequestHandler):
     
     def get(self):
-        
-        
         """this method is for testing purpose only and will be deleted!!!"""
-#        self.response.out.write('<html><body>')
+        self.response.out.write('<html><body>')
         """display a html form"""
-#        values = {"try1": [1]}
-#        self.response.out.write(template.render('main.html', values))
-#        self.response.out.write("""</body></html>""")
-        
-#        self.response.headers['Content-Type'] = 'text/html'
-#        self.response.out.write("""<html><body>Welcome!<br>""")
+        values = {"try1": [1]}
+        self.response.out.write(template.render('main.html', values))
+        self.response.out.write("""</body></html>""")
+       
+        self.response.headers['Content-Type'] = 'text/html'
+        self.response.out.write("""<html><body>Welcome!<br>""")
 
         self.response.out.write("""in order to load data please press the load button:<br>
                                    <div class="mybutton">    
@@ -58,52 +57,58 @@ class SearchInDataStore(webapp.RequestHandler):
         """get the search parameters from the request"""
         gender = self.request.get("gender_id")
         items_num = int(self.request.get("items_num_id"))
-        style = str(self.request.get("style_id"))
-        season = str(self.request.get("season_id"))
+        style = self.request.get("style_id")
+        season = self.request.get("season_id")
+        
+        if (gender is None) or (items_num is None):
+            self.error(404) #not found
+            self.response.out.write('One of the request keys was not found')
+            return
+        
         types_list = []
         colors_list = []
         """get all items' types and colors in two lists"""
         for i in range(items_num):
-            types_list.append(str(self.request.get("item"+str(i+1)+"_type_id")))
-            colors_list.append(str(self.request.get("item"+str(i+1)+"_color_id")))
-    
+            type = self.request.get("item"+str(i+1)+"_type_id")
+            color = self.request.get("item"+str(i+1)+"_color_id")
+            if (type is None) or (color is None):
+                self.error(404) #not found
+                self.response.out.write('One of the request keys was not found')
+                return                
+            types_list.append(str(type))
+            colors_list.append(str(color))
+
         """create the list that will be returned from the request (in json format)"""
         imageList = []
+        
+        """prepare a query"""
+        query = models.ImageStruct.all() 
+        query.filter("subject_gender = ", gender).order("-avg_image_rating") 
+        
+        if style:
+            query.filter("style = ", style) 
+        if season:
+            query.filter("season = ", season) 
 
-        """get data from the data store, filter it according to gender and sort in ascending order.
-        By default will fetch up to 2000 results"""
-        all_images = models.ImageStruct.gql("WHERE subject_gender = :1 ORDER BY avg_image_rating ASC", gender)
-        #all_images = db.GqlQuery("SELECT * FROM ImageStruct WHERE subject_gender = :1 " +
-        #                         "ORDER BY avg_image_rating ASC", gender)
-        if all_images:
-            """filter according to style, if needed"""
-            if style != '':
-                all_images.filter("style =", style)
-            if all_images:
-                """filter according to season, if needed"""
-                if season != '':
-                    all_images.filter("season =", season)
-                if all_images:
-                    """filter according to items"""
-                    for cur_image in all_images:
-                        image_items = cur_image.itemstruct_set
-                        suitable = 0;
-                        """go over all the items the request send, and check if every item appears in the certain image"""
-                        for i in range(items_num):
-                            """go over all the items an image contains and check if one of them is suits the current 
-                            item from the request items list. if we found a suitable item, we increase the suitable
-                            counter and stop searching (break)"""
-                            for item in image_items:
-                                if ((item.item_type == types_list[i]) and (item.item_color == colors_list[i])):
-                                    suitable = suitable + 1
-                                    break;  
-                            if suitable == items_num:
-                                imageList.append(cur_image.to_dict())
+        results = query.fetch(100)
+        if results:
+            """filter according to items"""
+            for cur_image in results:
+                image_items = cur_image.itemstruct_set
+                isMissing = 0
+                """go over all the items the request sent, and check if every item appears in the certain image"""
+                """ check if a certain image has all the items the request sent 
+                (for each item in the items list- check if the image contains it) """
+                for i in range(items_num):
+                    q = image_items.filter("item_type = ", types_list[i]).filter("item_color = ", colors_list[i])
+                    if q.get() is None:
+                        isMissing = 1
+                        break 
+                if isMissing == 0:
+                    imageList.append(cur_image.to_dict())
         self.response.headers['Content-Type'] = "application/json"
-        self.response.out.write(simplejson.dumps(imageList))        
-#        else:
-        #    self.error(404)
-        #    self.response.out.write('   ')
+        self.response.out.write(simplejson.dumps(imageList))                    
+
                
 class UpdateRating:
     def post(self):
@@ -111,8 +116,14 @@ class UpdateRating:
         this method receives a get request with keys: key_id = an id of an image struct 
                                                       rating_id = a rating we want to update the current rating with
         sends new rating to caller"""
-        image_struct = db.get(self.request.get("key_id"))
-        rating = float(self.request.get("rating_id"))
+        key = self.request.get("key_id")
+        rating = self.request.get("rating_id")
+        if (key is None) or (rating is None):
+            self.error(404) #not found
+            self.response.out.write('One of the request keys was not found')
+            return              
+        image_struct = db.get(key)
+        rating = float(rating)
         image_struct.rating_sum = image_struct.rating_sum + rating
         image_struct.rating_num = image_struct.rating_num + 1 
         image_struct.avg_image_rating = image_struct.rating_sum/image_struct.rating_num
@@ -126,7 +137,13 @@ class UpdateRating:
 class GetImageByKeyID (webapp.RequestHandler):
     def get(self):
         """this method receives an image id key and return the url address of the suitable image"""
-        image_struct = db.get(self.request.get("key_id"))
+        key = self.request.get("key_id")
+        if key is None:
+            self.error(404) #not found
+            self.response.out.write('One of the request keys was not found')
+            return  
+        
+        image_struct = db.get(key)
         if image_struct.image:
             self.response.headers['Content-Type'] = "image/jpg"
             self.response.out.write(image_struct.image)
@@ -134,11 +151,68 @@ class GetImageByKeyID (webapp.RequestHandler):
             self.redirect('/my_images/no_image.jpg')
 
 
+class AddImagesToDataStore(webapp.RequestHandler):
+    def post(self):
+        gender = self.request.get("gender_id")
+        style = str(self.request.get("style_id"))
+        season = str(self.request.get("season_id"))
+        items_number = self.request.get('items_num_id')
+        
+        if (gender is None) or (items_num is None) or (items_number is None):
+            self.error(404) #not found
+            self.response.out.write('One of the request keys was not found')
+            return
+        
+        image_struct = models.ImageStruct()
+        
+        image_struct.subject_gender = gender
+        image_struct.items_number = int(items_number)
+          
+        if style: 
+            image_struct.style = style
+        if season:
+            image_struct.season = season
+        
+        img_data = self.request.POST.get('img_id').file.read()
+        try:
+            img = images.Image(img_data)
+            img.resize(190, 190)
+            image_struct.image = img.execute_transforms(images.JPEG)
+            image_struct.put()
+            for i in range(image_struct.items_number):
+                item = models.ItemStruct(image_struct = image_struct) 
+                """fill-in  the item properties"""
+                type = 'item' + str(i + 1) + '_type_id'
+                color = 'item' + str(i + 1) + ' _color_id'
+                item.item_type = self.request.get(type)     
+                item.item_color = self.request.get(color)
+                if (item.item_type is None) or (item.item_color is None):
+                    #TODO: delete image and previous items
+                    self.error(404) #not found
+                    self.response.out.write('One of the request keys was not found')
+                    return 
+                item.put()
+            self.response.set_status(200)
+            
+        except images.BadImageError:
+            self.error(400)
+            self.response.out.write('A problem occurred during processing the image.')
+        except images.NotImageError:
+            self.error(400)
+            self.response.out.write('Invalid image format.'
+                                    'Use JPEG, GIF, PNG, BMP, TIFF, and ICO files only.')
+        except images.LargeImageError:
+            self.error(400)
+            self.response.out.write('The image provided was too large to process.')        
+        
+
 application = webapp.WSGIApplication([
     ('/', MainPage),
     ('/img', GetImageByKeyID),
     ('/search', SearchInDataStore),
-    ('/update-rating', UpdateRating)
+    ('/upload', AddImagesToDataStore),
+    ('/update-rating', UpdateRating)#,
+#    ('/im-feeling-lucky', FeelingLucky)
 ], debug=True)
 
 def main():       
