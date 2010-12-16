@@ -1,5 +1,5 @@
 application: what-2-wear
-version: 9
+version: 10
 api_version: 1
 runtime: python
 
@@ -7,13 +7,30 @@ handlers:
 - url: /favicon.ico
   static_files: static/favicon.ico
   upload: static/favicon.ico
+
 - url: /my_images
   static_dir: my_images
+
 - url: /my_csv_file
   static_dir: my_csv_file
+
 - url: /(loadImages|clearImages)
   script: my_data_handler.py
   login: admin
+
+- url: /googleca61d47cd0cefdbf.html
+  static_files: google_html/googleca61d47cd0cefdbf.html
+  upload: google_html/googleca61d47cd0cefdbf.html
+
+- url: /google_html
+  static_files: google_html
+  upload: google_html
+
+
+#- url: /profile/.*
+#  script: user_profile.py
+#  login: required
+
 - url: /.*
   script: server_side.py
 

@@ -32,6 +32,7 @@ class LoadImages(webapp.RequestHandler):
                                                    items_num = int(d['items_num']),
                                                    style = d['style'],
                                                    season = d['season'])
+                        image.assign_random()
                         image.put()
                         for i in range(image.items_num):
                             item = models.ItemStruct(image_struct = image, 

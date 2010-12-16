@@ -13,16 +13,9 @@ indexes:
 - kind: ImageStruct
   properties:
   - name: season
-  - name: style
   - name: subject_gender
   - name: avg_image_rating
     direction: desc
-
-- kind: ImageStruct
-  properties:
-  - name: season
-  - name: subject_gender
-  - name: avg_image_rating
 
 - kind: ImageStruct
   properties:
@@ -30,20 +23,22 @@ indexes:
   - name: season
   - name: subject_gender
   - name: avg_image_rating
+    direction: desc
 
 - kind: ImageStruct
   properties:
   - name: style
   - name: subject_gender
   - name: avg_image_rating
-
-- kind: ImageStruct
-  properties:
-  - name: subject_gender
-  - name: avg_image_rating
+    direction: desc
 
 - kind: ImageStruct
   properties:
   - name: subject_gender
   - name: avg_image_rating
     direction: desc
+
+- kind: ImageStruct
+  properties:
+  - name: subject_gender
+  - name: random_num
