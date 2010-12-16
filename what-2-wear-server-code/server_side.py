@@ -1,15 +1,17 @@
 import logging
-
+import random
+import sys
+import models
 #import cgi
-#import sys #import sys module for printing to stdout
-from google.appengine.ext import db
+
 #from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from django.utils import simplejson
-from google.appengine.ext.webapp import template
+#from google.appengine.ext.webapp import template
 from google.appengine.api import images
-import models
+from google.appengine.ext import db 
+
 
 
 logging.getLogger().setLevel(logging.DEBUG)
@@ -17,12 +19,12 @@ logging.getLogger().setLevel(logging.DEBUG)
 class MainPage(webapp.RequestHandler):
     
     def get(self):
-        """this method is for testing purpose only and will be deleted!!!"""
-        self.response.out.write('<html><body>')
-        """display a html form"""
-        values = {"try1": [1]}
-        self.response.out.write(template.render('main.html', values))
-        self.response.out.write("""</body></html>""")
+#        """this method is for testing purpose only and will be deleted!!!"""
+#        self.response.out.write('<html><body>')
+#        """display a html form"""
+#        values = {"try1": [1]}
+#        self.response.out.write(template.render('main.html', values))
+#        self.response.out.write("""</body></html>""")
        
         self.response.headers['Content-Type'] = 'text/html'
         self.response.out.write("""<html><body>Welcome!<br>""")
@@ -153,12 +155,14 @@ class GetImageByKeyID (webapp.RequestHandler):
 
 class AddImagesToDataStore(webapp.RequestHandler):
     def post(self):
+
         gender = self.request.get("gender_id")
         style = str(self.request.get("style_id"))
         season = str(self.request.get("season_id"))
-        items_number = self.request.get('items_num_id')
+        items_number = self.request.get("items_num_id")
+        file_image = self.request.POST.get("img_id")
         
-        if (gender is None) or (items_num is None) or (items_number is None):
+        if (gender is None) or (items_number is None) or (file_image is None):
             self.error(404) #not found
             self.response.out.write('One of the request keys was not found')
             return
@@ -166,20 +170,21 @@ class AddImagesToDataStore(webapp.RequestHandler):
         image_struct = models.ImageStruct()
         
         image_struct.subject_gender = gender
-        image_struct.items_number = int(items_number)
+        image_struct.items_num = int(items_number)
           
         if style: 
             image_struct.style = style
         if season:
             image_struct.season = season
         
-        img_data = self.request.POST.get('img_id').file.read()
+        img_data = file_image.file.read()
         try:
             img = images.Image(img_data)
             img.resize(190, 190)
             image_struct.image = img.execute_transforms(images.JPEG)
+            image_struct.assign_random()
             image_struct.put()
-            for i in range(image_struct.items_number):
+            for i in range(image_struct.items_num):
                 item = models.ItemStruct(image_struct = image_struct) 
                 """fill-in  the item properties"""
                 type = 'item' + str(i + 1) + '_type_id'
@@ -193,7 +198,7 @@ class AddImagesToDataStore(webapp.RequestHandler):
                     return 
                 item.put()
             self.response.set_status(200)
-            
+            self.response.out.write('success')
         except images.BadImageError:
             self.error(400)
             self.response.out.write('A problem occurred during processing the image.')
@@ -204,18 +209,49 @@ class AddImagesToDataStore(webapp.RequestHandler):
         except images.LargeImageError:
             self.error(400)
             self.response.out.write('The image provided was too large to process.')        
+
+class FeelingLucky(webapp.RequestHandler):
+    def get(self):        
+        gender = self.request.get("gender_id")
+        if (gender is None):
+            self.error(404) #not found
+            self.response.out.write('One of the request keys was not found')
+            return
         
+        """get a random image"""
+        #query = db.Query(models.ImageStruct)
+        #query.filter('subject_gender =', gender)
+        #query.filter('random_num >', rand).order('-random_num')
+        
+        isFound = 0
+        result = None
+        while (isFound == 0):
+            """get a random number"""
+            rand = random.randint(1, sys.maxint)
+            query = db.GqlQuery("SELECT * FROM ImageStruct WHERE subject_gender = :1 " +
+                                "AND random_num > :2 " +
+                                "ORDER BY random_num ASC ", gender, rand)
+            result = query.get()
+            if not (result is None):
+                isFound = 1;
+
+        """create the list that will be returned from the request (in json format)"""
+        imageList = []
+        imageList.append(result.to_dict())
+        self.response.headers['Content-Type'] = "application/json"
+        self.response.out.write(simplejson.dumps(imageList))   
 
 application = webapp.WSGIApplication([
     ('/', MainPage),
     ('/img', GetImageByKeyID),
     ('/search', SearchInDataStore),
     ('/upload', AddImagesToDataStore),
-    ('/update-rating', UpdateRating)#,
-#    ('/im-feeling-lucky', FeelingLucky)
+    ('/update-rating', UpdateRating),
+    ('/im-feeling-lucky', FeelingLucky)
 ], debug=True)
 
-def main():       
+def main():
+    random.seed()
     run_wsgi_app(application)
     
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 from google.appengine.ext import db
-from google.appengine.api import images
+import random 
+import sys
 
 
 class ImageStruct(db.Model):
@@ -12,13 +13,13 @@ class ImageStruct(db.Model):
     items_num = db.IntegerProperty(default = 0, choices = set([0, 1, 2, 3, 4]))
     season = db.StringProperty(default = '', choices = set(['','Summer', 'Autumn', 'Winter', 'Spring']))
     style = db.StringProperty(default = '', choices = set(['','Casual', 'Elegant', 'Sports']))
+    random_num = db.IntegerProperty()
     
     
     def to_dict(self):
         """ this method returns a dictionary of some of the properties above """
         d = {}
         d['key_id'] = str(self.key())
-        #d['url_id'] = "http://what-2-wear.appspot.com/img?key_id=%s" % self.key()
         d['gender_id'] = self.subject_gender
         d['season_id'] = self.season
         d['style_id'] = self.style
@@ -30,6 +31,19 @@ class ImageStruct(db.Model):
             d.update(item.to_dict(i))
             i = i + 1
         return d
+    
+    def assign_random(self):
+        isFound = 0
+        rand = -1
+        """get random number"""
+        while (isFound == 0):
+            rand = random.randint(1, sys.maxint)
+            """check if we already used this random number"""
+            query = db.Query(ImageStruct)
+            result = query.filter('random_num =', rand).get()
+            if (result is None):
+                isFound = 1
+        self.random_num = rand
 
     
 class ItemStruct(db.Model):
