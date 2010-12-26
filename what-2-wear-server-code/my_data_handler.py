@@ -6,6 +6,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.api import users
 from google.appengine.ext.webapp.util import login_required
 import models
+import random
 
 
 class LoadImages(webapp.RequestHandler):
@@ -16,10 +17,14 @@ class LoadImages(webapp.RequestHandler):
         if (user.nickname() != "michalfaktor"):
             self.response.out.write("""access denied<br>""")				
         else:
+            models.UserStruct(user = users.User("michalfaktor@gmail.com")).put()
+            models.UserStruct(user = users.User("cohenhila4@gmail.com")).put() 
+            models.UserStruct(user = users.User("niritg@gmail.com")).put()
             reader = urlfetch.Fetch('http://what-2-wear.appspot.com/my_csv_file/my_images_data.csv').content
             reader = reader.split("\r\n")
             isFirst = 1      
             headlines = reader[0].split(",")
+            j = 0
             for row in reader:
                 if (isFirst != 1):
                     content =  row.split(",")
@@ -27,18 +32,29 @@ class LoadImages(webapp.RequestHandler):
                     d = dict(combo)
                     if (d['image_name'] != ''):
                         url = 'http://what-2-wear.appspot.com/my_images/' + d['image_name']
+                        rand_rating = float(random.randint(1, 5))
                         image = models.ImageStruct(image = db.Blob(images.resize(urlfetch.Fetch(url).content, 190, 190)), 
                                                    subject_gender = d['gender'],
                                                    items_num = int(d['items_num']),
                                                    style = d['style'],
-                                                   season = d['season'])
-                        image.assign_random()
-                        image.put()
+                                                   season = d['season'],
+                                                   rating_sum = rand_rating,
+                                                   rating_num = 1,
+                                                   avg_image_rating = rand_rating)
                         for i in range(image.items_num):
-                            item = models.ItemStruct(image_struct = image, 
-                                                     item_type = d['item'+str(i+1)+'_type'], 
-                                                     item_color = d['item'+str(i+1)+'_color'])
-                            item.put()
+                            (image.items_list).append(d['item'+str(i+1)+'_type']+","+d['item'+str(i+1)+'_color'])
+                        if (j == 0):
+                            image.assign_user("michalfaktor@gmail.com")
+                            j = j + 1
+                        elif (j == 1):
+                            image.assign_user("cohenhila4@gmail.com")
+                            j = j + 1
+                        else:
+                            image.assign_user("niritg@gmail.com")
+                            j = 0
+                        user = image.user
+                        user.update_score(0, image.avg_image_rating)
+                        user.put()
                     else:
                         break
                 else:
@@ -46,7 +62,7 @@ class LoadImages(webapp.RequestHandler):
                     isFirst = 0
             self.response.out.write("""data loaded<br>""")
         self.response.out.write("""<div class="mybutton">    
-                               <button onclick="window.location='/'" 
+                               <button onclick="window.location='/admin-entrance'" 
                                style="width:80;height:24">return</button><br> 
                                </div>
                                </body></html>""")
@@ -63,12 +79,12 @@ class ClearImages(webapp.RequestHandler):
             allImages = models.ImageStruct.all()
             if allImages:
                 db.delete(allImages)
-            allItems = models.ItemStruct.all()
-            if allItems:
-                db.delete(allItems)
+            allUsers = models.UserStruct.all()
+            if allUsers:
+                db.delete(allUsers)
             self.response.out.write("""all data has been deleted<br>""")
         self.response.out.write("""<div class="mybutton">    
-                                   <button onclick="window.location='/'" 
+                                   <button onclick="window.location='/admin-entrance'" 
                                    style="width:80;height:24">return</button><br> 
                                    </div>
                                    </body></html>""")       

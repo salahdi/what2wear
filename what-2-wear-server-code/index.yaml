@@ -12,21 +12,11 @@ indexes:
 
 - kind: ImageStruct
   properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: items_list
   - name: season
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-- kind: ImageStruct
-  properties:
-  - name: style
-  - name: season
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-- kind: ImageStruct
-  properties:
   - name: style
   - name: subject_gender
   - name: avg_image_rating
@@ -34,11 +24,156 @@ indexes:
 
 - kind: ImageStruct
   properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: season
+  - name: style
   - name: subject_gender
   - name: avg_image_rating
     direction: desc
 
 - kind: ImageStruct
   properties:
+  - name: items_list
+  - name: items_list
+  - name: season
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
+  - name: season
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: season
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: season
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: season
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
+  - name: season
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageStruct
+  properties:
+  - name: user
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageStruct
+  properties:
+  - name: items_list
   - name: subject_gender
   - name: random_num
+    direction: asc
