@@ -10,170 +10,178 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-- kind: ImageStruct
+- kind: UserStruct
   properties:
-  - name: items_list
-  - name: items_list
-  - name: items_list
-  - name: items_list
-  - name: season
-  - name: style
-  - name: subject_gender
-  - name: avg_image_rating
+  - name: account_type
+  - name: score
     direction: desc
 
-- kind: ImageStruct
+- kind: ImageMetadataStruct
   properties:
-  - name: items_list
-  - name: items_list
-  - name: items_list
-  - name: season
-  - name: style
   - name: subject_gender
-  - name: avg_image_rating
+  - name: date
     direction: desc
 
-- kind: ImageStruct
+- kind: ImageMetadataStruct
   properties:
-  - name: items_list
-  - name: items_list
-  - name: season
-  - name: style
   - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
+  - name: random_num
+    direction: asc
 
-- kind: ImageStruct
-  properties:
-  - name: items_list
-  - name: season
-  - name: style
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-
-- kind: ImageStruct
-  properties:
-  - name: items_list
-  - name: items_list
-  - name: items_list
-  - name: items_list
-  - name: season
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-- kind: ImageStruct
-  properties:
-  - name: items_list
-  - name: items_list
-  - name: items_list
-  - name: season
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-- kind: ImageStruct
-  properties:
-  - name: items_list
-  - name: items_list
-  - name: season
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-- kind: ImageStruct
-  properties:
-  - name: items_list
-  - name: season
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-
-- kind: ImageStruct
-  properties:
-  - name: items_list
-  - name: items_list
-  - name: items_list
-  - name: items_list
-  - name: style
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-- kind: ImageStruct
-  properties:
-  - name: items_list
-  - name: items_list
-  - name: items_list
-  - name: style
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-- kind: ImageStruct
-  properties:
-  - name: items_list
-  - name: items_list
-  - name: style
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-- kind: ImageStruct
-  properties:
-  - name: items_list
-  - name: style
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-
-- kind: ImageStruct
-  properties:
-  - name: items_list
-  - name: items_list
-  - name: items_list
-  - name: items_list
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-- kind: ImageStruct
-  properties:
-  - name: items_list
-  - name: items_list
-  - name: items_list
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-- kind: ImageStruct
-  properties:
-  - name: items_list
-  - name: items_list
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-- kind: ImageStruct
-  properties:
-  - name: items_list
-  - name: subject_gender
-  - name: avg_image_rating
-    direction: desc
-
-- kind: ImageStruct
+- kind: ImageMetadataStruct
   properties:
   - name: user
   - name: avg_image_rating
     direction: desc
 
-- kind: ImageStruct
+- kind: ImageMetadataStruct
   properties:
   - name: items_list
   - name: subject_gender
-  - name: random_num
-    direction: asc
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: season
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: season
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: season
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: season
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: season
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: season
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: season
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
+
+- kind: ImageMetadataStruct
+  properties:
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: items_list
+  - name: season
+  - name: style
+  - name: subject_gender
+  - name: avg_image_rating
+    direction: desc
