@@ -1,5 +1,5 @@
 application: what-2-wear
-version: 12
+version: 18
 api_version: 1
 runtime: python
 
@@ -11,7 +11,7 @@ handlers:
   static_dir: my_images
 - url: /my_csv_file
   static_dir: my_csv_file
-- url: /(loadImages|clearImages)
+- url: /(loadData|clearAllData)
   script: my_data_handler.py
   login: admin
 - url: /.*
