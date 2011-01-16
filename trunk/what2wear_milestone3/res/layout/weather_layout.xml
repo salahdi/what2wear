@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+    <ImageButton
+		android:id="@+id/logo_button"  
+	    android:layout_width="wrap_content" 
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentTop="true"
+	    android:src="@drawable/what2wear2"
+	    android:background="#000000"
+	/>
+	
+	<ImageView 
+		android:id="@+id/search_by_weather_title"
+		android:src="@drawable/search_by_weather_title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		android:layout_alignParentTop="true"
+		android:layout_marginTop = "50px"
+	/>
+		
+		<AutoCompleteTextView
+			android:id="@+id/edt_country"
+			android:layout_height="wrap_content"
+			android:layout_width="100px"
+			android:singleLine="true"
+			android:hint="Country"
+			android:layout_below="@id/search_by_weather_title"
+			android:layout_marginTop = "10px"
+			android:layout_alignParentLeft="true"
+			android:textColorHint="#0000ff"
+			android:completionThreshold="1"
+		/>
+	
+		<AutoCompleteTextView
+			android:id="@+id/edt_city"
+			android:layout_height="wrap_content"
+			android:layout_width="100px"
+			android:layout_alignTop="@id/edt_country"
+			android:layout_below="@id/search_by_weather_title"
+			android:layout_toRightOf="@id/edt_country"
+			android:singleLine="true"
+			android:hint="City"
+			android:textColorHint="#0000ff"
+		/>
+		
+		<ImageView
+			android:id="@+id/day_time"
+			android:layout_height="60px"
+			android:layout_width="60px"
+			android:layout_below="@id/search_by_weather_title"
+			android:layout_toRightOf="@id/edt_city"
+			android:layout_alignTop="@id/edt_city"
+			android:gravity="center"
+		/>
+		<ImageView
+			android:id="@+id/night_time"
+			android:layout_height="60px"
+			android:layout_width="60px"
+			android:layout_below="@id/search_by_weather_title"
+			android:layout_toRightOf="@id/day_time"
+			android:layout_alignTop="@id/edt_city"
+			android:gravity="center"
+		/>
+	
+	<Button
+		android:id="@+id/btn_ok"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="OK"
+		android:layout_below="@id/edt_city"
+		android:layout_alignLeft="@id/edt_city"
+		android:width="100px"
+		android:gravity="center"
+		android:layout_gravity="center"
+	/>
+
+    	<ImageView
+			android:id="@+id/output_icon"
+			android:layout_below="@id/btn_ok"
+			android:layout_alignParentLeft="true"
+    		android:layout_marginLeft="7px"
+			android:layout_height="60px"
+			android:layout_width="60px"
+		/>
+
+		<TextView
+    		android:id="@+id/txt_output"
+    		android:layout_width="120px"
+    		android:layout_height="wrap_content"
+    		android:text=""
+    		android:textSize="16sp"
+    		android:layout_alignParentLeft="true"
+    		android:layout_marginLeft="7px"
+    		android:layout_below="@id/output_icon"
+    	/>
+		
+		<ImageView
+			android:id="@+id/rec2"
+			android:layout_height="60px"
+			android:layout_width="60px"
+			android:layout_marginTop = "10px"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight = "65px"
+			android:layout_below="@id/btn_ok"
+		/>
+		
+		<ImageView
+			android:id="@+id/rec1"
+			android:layout_height="60px"
+			android:layout_width="60px"
+			android:layout_marginTop = "5px"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight = "65px"
+			android:layout_below="@id/rec2"
+		/>
+		
+		<ImageView
+			android:id="@+id/rec3"
+			android:layout_height="60px"
+			android:layout_width="60px"
+			android:layout_marginRight = "65px"
+			android:layout_marginTop = "5px"
+			android:layout_alignParentRight="true"
+			android:layout_below="@id/rec1"
+		/>
+		
+		<ImageView
+			android:id="@+id/rec5"
+			android:layout_height="60px"
+			android:layout_width="60px"
+			android:layout_marginRight="5px"
+			android:layout_alignTop="@+id/rec1"
+			android:layout_toLeftOf="@id/rec1"
+		/>
+		
+		<ImageView
+			android:id="@+id/rec4"
+			android:layout_height="60px"
+			android:layout_width="60px"
+			android:layout_alignTop="@+id/rec1"
+			android:layout_alignParentRight="true"
+		/>
+	
+</RelativeLayout>

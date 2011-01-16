@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<LinearLayout 
+	android:id="@+id/LinearLayout01"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/form3"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent" 
+        android:orientation="vertical" >
+	
+	<ImageView
+		android:id="@+id/logo_button"  
+	    android:layout_width="wrap_content" 
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentTop="true"
+	    android:src="@drawable/what2wear2"
+	    />
+		    
+    <ImageView 
+		android:id="@+id/upload_title"
+		android:src="@drawable/upload_title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		android:layout_alignParentTop="true"
+		android:layout_marginTop = "50px"
+		 />
+		
+	<ImageButton
+        android:id="@+id/browse"
+        android:background="@drawable/search_folder_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight = "true"
+        android:layout_below="@id/upload_title"/>
+        
+    <TextView
+    	android:id="@+id/asterix1"
+		android:text="*"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/upload_title"
+		android:textColor="#f00"
+		android:layout_alignParentLeft="true"/>
+
+    <TextView
+    	android:id="@+id/select_title1"
+		android:text="@string/select_item"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignTop= "@id/asterix1"
+		android:layout_toRightOf="@id/asterix1"/>
+
+	<Spinner 
+        android:id="@+id/spinner1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/select_item"
+        android:layout_toLeftOf="@id/browse"
+        android:layout_alignBottom="@id/browse"/>
+        
+      	 <TextView
+    	android:id="@+id/asterix2"
+		android:text="*"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/spinner1"
+		android:textColor="#f00"
+		android:layout_alignParentLeft="true"
+		/>
+		
+     <TextView
+    	android:id="@+id/select_title2"
+		android:text="@string/select_color"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/spinner1"
+		android:layout_toRightOf="@id/asterix2"/>
+        
+	<Button
+        android:id="@+id/colorBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft = "true"
+        android:layout_below="@id/select_title2"/>
+        
+        	
+		 <ImageView 
+		android:id="@+id/pictuer_thumb"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_alignTop="@id/colorBtn"
+		 />
+    	
+  	   <Button
+    	android:id="@+id/advanced"
+  		android:background="@drawable/custom_button_add" 
+    	android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+    	android:layout_alignParentLeft="true"
+    	android:layout_below="@id/colorBtn"/>
+
+    
+    <Button
+        android:id="@+id/upload_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_button_upload" 
+        android:layout_centerHorizontal="true"
+    	android:layout_alignParentBottom = "true"
+    	android:layout_marginBottom="15px" />	
+
+</RelativeLayout>		
+</LinearLayout>

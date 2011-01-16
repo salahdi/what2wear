@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<LinearLayout android:id="@+id/LinearLayout01"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+		<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:orientation="vertical">
+
+			<ImageView
+				android:id="@+id/logo_button"  
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentLeft="true"
+			    android:layout_alignParentTop="true"
+			    android:src="@drawable/what2wear2"
+			    />
+				    
+		    <ImageView 
+				android:id="@+id/top5_title"
+				android:src="@drawable/top5"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:layout_alignParentTop="true"
+				android:layout_marginTop = "50px"
+				/>
+				
+			<ListView
+				android:id="@+id/top5users"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:layout_below="@id/top5_title"
+				/>
+				
+
+		</RelativeLayout>
+
+</LinearLayout>
