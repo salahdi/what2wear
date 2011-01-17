@@ -72,10 +72,9 @@ class ImageMetadataStruct(db.Model):
         d = {}
         d['key_id'] = str(self.key())
         d['image_key_id'] = str(ImageMetadataStruct.image.get_value_for_datastore(self))
-        #d['date_id'] = str((self.date).date())
         d['gender_id'] = self.subject_gender
-        d['season_id'] = ", ".join(self.season)
-        d['style_id'] = ", ".join(self.style)
+        d['season_id'] = ",".join(self.season)
+        d['style_id'] = ",".join(self.style)
         d['rating_id'] = "%.2f" % self.avg_image_rating
         if self.user:
             this_user = self.user
@@ -125,8 +124,6 @@ class ImageMetadataStruct(db.Model):
                 """save the user as the uploader user"""
                 self.user = user_struct
                 return user_struct
-                #self.put()
-
     
 class LoaderStruct(db.Model):
     isLoaded = db.BooleanProperty(default = False)
