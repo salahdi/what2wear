@@ -77,6 +77,7 @@ class SearchInDataStore(webapp.RequestHandler):
         
         """prepare a query"""
         queryStr = "SELECT * FROM ImageMetadataStruct WHERE subject_gender = '"+ gender + "'" 
+
         if styles != [u'']:
             temp = ""
             for style in styles:
@@ -104,6 +105,8 @@ class SearchInDataStore(webapp.RequestHandler):
             queryStr += " AND items_list = '" + unicode(type+","+color) + "'"
         
         queryStr += " ORDER BY avg_image_rating DESC LIMIT 100"
+
+        logging.info(queryStr)
 
         query = db.GqlQuery(queryStr)
 
@@ -136,7 +139,7 @@ class UpdateRating(webapp.RequestHandler):
    
         old_rating = db.run_in_transaction(update_rating_image, image_struct, rating)
 
-	db.run_in_transaction(update_rating_user, image_struct.user, old_rating, image_struct.avg_image_rating)        
+        db.run_in_transaction(update_rating_user, image_struct.user, old_rating, image_struct.avg_image_rating)        
         
         """send the updated rating to the caller"""
         avg = "%.2f" % image_struct.avg_image_rating
@@ -167,7 +170,7 @@ class GetImageByKeyID (webapp.RequestHandler):
             self.redirect('/my_images/no_image.jpg')
 
 
-class AddImagesToDataStore(webapp.RequestHandler):
+class UploadImagesToDataStore(webapp.RequestHandler):
     def post(self):
         gender = self.request.get("gender_id")
         styles = self.request.get("style_id", allow_multiple = True)
@@ -266,7 +269,8 @@ class FeelingLucky(webapp.RequestHandler):
 
 class TopFive(webapp.RequestHandler):
 
-    """ this method return a list of 5 users, each user holds details of:
+    """ The method receives account type (optional).
+        this method returns a list of 5 users, each user holds details of:
         user_nickname_id - the user's nickname
         score_id - the user's score (sum of average picture score)
         images_num_id - number of images this user uploaded"""
@@ -316,7 +320,7 @@ class SignUser(webapp.RequestHandler):
 class UserImages(webapp.RequestHandler):   
     def get(self):
         """ this method returns all the images associated with a certain user according to his email address
-        this method receives a get request with key email_id and with key sort_id"""
+        this method receives a get request with key email_or_id_id and with key sort_id"""
 
         email_or_id = self.request.get("email_or_id_id")
         sort_param = self.request.get("sort_id", default_value = "rating")
@@ -356,7 +360,7 @@ class UserImages(webapp.RequestHandler):
         self.response.headers['Content-Type'] = "application/json"
         self.response.out.write(simplejson.dumps(imageList))                    
 
-class intersectLists(webapp.RequestHandler):  
+class IntersectLists(webapp.RequestHandler):  
     """this method receives a list of friends nicknames and intersect this list with the users of
     the application""" 
     def post(self):
@@ -375,7 +379,7 @@ class intersectLists(webapp.RequestHandler):
         self.response.out.write(simplejson.dumps(friendsList)) 
 
 
-class newImages(webapp.RequestHandler): 
+class NewImages(webapp.RequestHandler): 
 
     """this method receives a number of images, an offset number and a gender (optional).
        The method returns the x newest images according the the number and offset in the input.
@@ -383,7 +387,7 @@ class newImages(webapp.RequestHandler):
     def get(self):
         num = self.request.get("number_id")
         offsetNum = self.request.get("offset_id", default_value = "0")
-        gender = self.request.get("gender_id", default_value = "none")
+        gender = self.request.get("gender_id", default_value = "")
 
         if (not num) or (not offsetNum):
             self.response.out.write('One of the requested keys was not found')
@@ -426,32 +430,14 @@ class ProperDelete(webapp.RequestHandler):
             user = entity.user
             user.score -= entity.avg_image_rating
             user.images_num -= 1
-            """look for users to has this key in their favorites list and delete it from this list"""
-            query = models.UserStruct.all()
-            query.filter("favorites = ", entity.key())
-            offset = 0
-            results = query.fetch(100, offset)
-            counter = 0
-            usersList = []
-            while (counter != -1):
-                for result in results:
-                    index = (result.favorites).index(entity.key())
-                    (result.favorites).pop(index)
-                    usersList.append(result)
-                    counter += 1
-                db.put(usersList)
-                usersList = []
-                if (counter == 100):
-                    offset += 100
-                    results = query.fetch(100, offset)
-                    counter = 0
-                else:
-                    counter = -1
             user.put()    
+            db.delete(entity.image)
             db.delete(entity)
         elif (model == "UserStruct"):
             """delete all images the user uploaded"""
             allImages = entity.imagemetadatastruct_set
+            for image in allImages:
+                db.delete(image.image)
             db.delete(allImages)    
             """delete the user from the data base"""
             db.delete(entity)
@@ -461,14 +447,14 @@ application = webapp.WSGIApplication([
     ('/admin-entrance', AdminEntrance),
     ('/img', GetImageByKeyID),
     ('/search', SearchInDataStore),
-    ('/upload', AddImagesToDataStore),
+    ('/upload', UploadImagesToDataStore),
     ('/update-rating', UpdateRating),
     ('/im-feeling-lucky', FeelingLucky),
     ('/top-five', TopFive),
     ('/sign-user', SignUser),
     ('/user-images', UserImages),
-    ('/intersect-lists', intersectLists),
-    ('/new-images', newImages),
+    ('/intersect-lists', IntersectLists),
+    ('/new-images', NewImages),
     ('/proper-delete', ProperDelete)
 ], debug=True)
 
