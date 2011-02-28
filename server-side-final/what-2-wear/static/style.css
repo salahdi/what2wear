@@ -1,0 +1,72 @@
+body {
+  font-size: 16px;
+  font-family: arial, verdana, sans-serif;
+}
+
+#main {
+}
+
+#imagescontent {
+  border: solid black 0px;
+}
+
+
+#topmenu {
+  font-size: 14px;
+  font-family: arial, verdana, sans-serif;
+  text-align: right;
+}
+
+td.imageTd {
+  width: 250px;  
+  vertical-align: top;
+  text-align: left;
+  border: solid black 1px;
+}
+
+#logosection {  
+  align: left;
+}
+
+
+#logolink {
+  text-decoration: none;
+  color: white;
+  font-size: 50px;
+  font-family: arial, verdana, sans-serif;
+}
+
+img.imageLogo {
+  width: 200px;
+  border-style: none;
+}
+
+.imageDiv {
+}
+
+#buttonstyle {
+  width: 300px;
+  font-size: 16px;
+  font-family: arial, verdana, sans-serif;
+  text-align: center;
+}
+
+#pagination {
+  font-weight: bold;
+  color: black;
+  font-size: 14px;
+  font-family: arial, verdana, sans-serif;
+  letter-spacing: 2px;
+}
+
+#pagination input {
+  font-size: 13px;
+  font-family: arial, verdana, sans-serif;
+  border: solid black 1px;
+}
+
+#pagination a {
+  font-weight: bold;
+  color: #43C6DB;
+  text-decoration: none;
+}
