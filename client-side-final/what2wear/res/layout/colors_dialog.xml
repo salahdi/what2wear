@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:padding="7dip"
+	android:background="@color/gray">
+
+	<View android:id="@+id/numberSeparator0" android:layout_width="fill_parent"
+		android:layout_height="4dp" />
+	<View android:id="@+id/numberSeparator1" android:layout_width="fill_parent"
+		android:layout_height="1dp" android:layout_below="@id/numberSeparator0" />
+	<View android:id="@+id/numberSeparator2" android:layout_width="fill_parent"
+		android:layout_height="4dp" android:layout_below="@id/numberSeparator1" />
+	<Button android:id="@+id/colorful" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/colorful"
+		android:layout_alignParentBottom="true" />
+
+	<TableLayout android:id="@+id/row1" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_below="@id/numberSeparator2"
+		android:layout_above="@id/colorful" android:layout_weight="1">
+
+		<TableRow android:layout_weight="1">
+
+			<Button android:id="@+id/one" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1" />
+
+			<Button android:id="@+id/two" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1" />
+
+			<Button android:id="@+id/three" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1" />
+
+
+			<Button android:id="@+id/four" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1"
+				android:onClick="fourClicked" />
+		</TableRow>
+		<TableRow android:layout_weight="1">
+
+			<Button android:id="@+id/five" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1"
+				android:onClick="fiveClicked" />
+
+			<Button android:id="@+id/six" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1"
+				android:onClick="sixClicked" />
+
+			<Button android:id="@+id/seven" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1"
+				android:onClick="sevenClicked" />
+
+			<Button android:id="@+id/eight" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1"
+				android:onClick="eightClicked" />
+
+		</TableRow>
+		<TableRow android:layout_weight="1">
+
+			<Button android:id="@+id/nine" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1"
+				android:onClick="nineClicked" />
+
+			<Button android:id="@+id/ten" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1"
+				android:onClick="tenClicked" />
+
+			<Button android:id="@+id/eleven" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1"
+				android:onClick="elevenClicked" />
+
+			<Button android:id="@+id/twelve" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1"
+				android:onClick="twelveClicked" />
+
+		</TableRow>
+		<TableRow android:layout_weight="1">
+
+			<Button android:id="@+id/thirteen" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1"
+				android:onClick="thirteenClicked" />
+
+			<Button android:id="@+id/fourteen" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1"
+				android:onClick="fourClicked" />
+
+			<Button android:id="@+id/fifteen" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1"
+				android:onClick="fifteenClicked" />
+
+			<Button android:id="@+id/sixteen" android:layout_width="0dip"
+				android:layout_height="fill_parent" android:layout_weight="1"
+				android:onClick="sixteenClicked" />
+
+		</TableRow>
+
+	</TableLayout>
+</RelativeLayout>
+
+	<!-- android:background="@drawable/colors_gradient" -->   

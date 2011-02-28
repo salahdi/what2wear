@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent" 
+              android:layout_height="fill_parent" 
+              android:orientation="vertical" >
+		<View
+			android:id="@+id/view"  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="fill_parent"
+		    />
+		 
+		 
+		 <TextView
+		android:id="@+id/item_prop1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above= "@+id/item_prop2"
+		android:layout_alignParentRight="true"
+		android:paddingRight = "35dp"
+		/>
+		
+		
+	<TextView
+		android:id="@+id/item_prop2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above= "@+id/item_prop3"
+		android:layout_alignLeft="@+id/item_prop1"
+		/>
+		
+	<TextView
+		android:id="@+id/item_prop3"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignLeft="@+id/item_prop1"
+		android:layout_alignParentBottom="true"
+		/>
+	
+	<TextView
+		android:id="@+id/rate_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above= "@+id/my_rating_bar"
+		android:layout_alignParentLeft="true"
+		/>
+		
+				
+		
+		 <ImageView
+		 	android:id="@+id/image_display"
+		 	android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_marginBottom="20px"
+			android:layout_above="@id/rate_text"
+		 />
+
+	<RatingBar  
+		android:id="@+id/my_rating_bar"
+		style="@style/RatingBar"
+		android:numStars ="5"
+		android:stepSize="0.5"
+		android:layout_alignParentBottom="true"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"/>
+
+    
+</RelativeLayout> 
