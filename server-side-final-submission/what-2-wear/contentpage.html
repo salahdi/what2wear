@@ -1,0 +1,242 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>what2wear - administrator website</title>
+<link rel="stylesheet" type="text/css" href="static/style.css" />
+<script src="static/common.js" type="text/javascript"></script>
+<script src="static/jquery-1.5.js" type="text/javascript">
+</script>
+<script src="static/json2.js" type="text/javascript"></script>
+</head>
+
+<script>
+
+  var what2wear = what2wear || {};
+
+  what2wear.ITEM_PER_PAGE = 8;
+  what2wear.ITEM_PER_ROW = 2;
+
+  what2wear.URL_ARGS = what2wear.getUrlArgs();
+  what2wear.USER = '{{user}}' || 'None';
+
+  jQuery(document).ready(function() {
+    what2wear.main();
+  });
+
+  what2wear.main = function() {
+    what2wear.getImages();
+  }
+
+  what2wear.getPageUrlHtml = function(pageIndex) {
+    var urlHtml = [];
+    
+    var linkUrl = ['javascript:top.location.href=\'?page=', pageIndex, '\''].join('');
+    
+    urlHtml.push('<a href="');
+    urlHtml.push(linkUrl);
+    urlHtml.push('">');
+    urlHtml.push(pageIndex);
+    urlHtml.push('</a>');
+
+    return urlHtml.join('');
+  }
+
+  what2wear.initPagination = function(imageTotal) {
+
+    var totalPage = Math.ceil(imageTotal / what2wear.ITEM_PER_PAGE);
+
+    var currentPage = what2wear.getCurrentPage();
+
+    var html = [];
+
+    var pagination = $('#pagination');
+
+    if (currentPage > 1) {
+      var prevButton = $('<input type="button" value="<<"/>');
+      
+      pagination.append(prevButton);
+      pagination.append('&nbsp;&nbsp;&nbsp;');
+
+      prevButton.click(function() {
+        
+        var prevIndex = currentPage - 1;
+        var prevUrl = ['?page=', prevIndex].join('');
+        top.location.href = prevUrl;
+
+      });
+    }
+
+    for (var i = 0; i < totalPage; i++) {
+      
+      var pageIndex = i + 1;
+
+      if (pageIndex != currentPage) { 
+        html.push(what2wear.getPageUrlHtml(pageIndex));
+        html.push('&nbsp;');
+      } else {
+        html.push(pageIndex);
+        html.push('&nbsp;');
+      }
+    }
+
+    $('#pagination').append(html.join(''));
+
+    if (currentPage < totalPage) {
+      var nextButton = $('<input type="button" value=">>"/>');
+
+      pagination.append('&nbsp;&nbsp;');
+      pagination.append(nextButton);
+
+      nextButton.click(function() {
+        var nextIndex = currentPage + 1;
+        var nextUrl = ['?page=', nextIndex].join('');
+        top.location.href = nextUrl;
+      });
+    }
+
+  }
+
+  what2wear.getImages = function() {
+    
+    var currentPage = what2wear.getCurrentPage();
+	
+    var data = ['page=', currentPage].join('');
+
+    var callback = function(data) {
+      
+      var json = JSON.parse(data);      
+      var images = json.images;
+      var imageTotal = json.total;
+      
+      var html = [];
+      
+      if (imageTotal>0){
+
+      	what2wear.initPagination(imageTotal);
+      
+      	html.push('<form method="post" action="/delete" enctype="multipart/form-data">')
+      
+      	var item_per_row = what2wear.ITEM_PER_ROW;
+      	var row_count = Math.ceil(images.length / item_per_row);
+      	var image_index = 0;
+      	html.push('<table width="100%" border=0 cellspacing=5 cellpadding=5>');
+
+      	for (var i = 0; i < row_count; i++) {
+        
+        	html.push('<tr>');
+
+        	for (var j = 0; j < item_per_row; j++) {
+          
+          		html.push('<td class="imageTd">');
+                    
+          		var imageHtml = '';
+          
+          		if (image_index < images.length) {
+            		var imageStruct = images[image_index];
+            		imageHtml = what2wear.createImageDiv(imageStruct);
+          		}
+          		html.push(imageHtml);
+
+          		html.push('</td>');
+
+          		image_index++;
+        	}
+
+        	html.push('</tr>');
+
+      	}
+
+      	html.push('</table>');
+      
+      	html.push('<div><input type="password" style="display:none" name="page" value="');
+      	html.push(currentPage);
+      	html.push('"></div>');
+      
+      	html.push('<div><input id="buttonstyle" type=submit value="delete all checked images"></div>');
+      
+	  	html.push('</form>');
+      	
+      	$('#imagescontent').append(html.join(''));
+      
+      } else {
+      
+      	html.push('The database is empty.');
+      	$('#main').append(html.join(''));
+      	
+      }
+   
+    }
+
+    $.ajax({
+      method: 'get',
+      url: 'imagesJson',
+      data: encodeURI(data),
+      success: callback
+      });
+  }
+
+  what2wear.createImageDiv = function(imageStruct) {
+
+    var date = new Date(Date.parse(imageStruct.date));
+    var date_label = [date.getDate(), 
+                      date.getMonth() + 1, 
+                      date.getFullYear()].join('/');
+    
+    var labels_array = [];
+    
+    labels_array.push(['<b>Date:&nbsp;</b>', date_label].join(''));
+    labels_array.push(['<b>Gender:&nbsp;</b>', imageStruct.gender].join(''));
+    labels_array.push(['<b>Items:&nbsp;</b>', imageStruct.items].join(''));
+    labels_array.push(['<b>Seasons:&nbsp;</b>', imageStruct.seasons].join(''));
+    labels_array.push(['<b>Styles:&nbsp;</b>', imageStruct.styles].join(''));
+    labels_array.push(['<b>Rating:&nbsp;</b>', imageStruct.rating].join(''));
+
+    
+    var pic = imageStruct.pic;
+
+    var image = ['<img src="', pic, '">'].join('');
+  
+    var imageHtml = [];
+    
+    imageHtml.push('<div><input type=checkbox name="keys" value="');
+    imageHtml.push(imageStruct.key);
+    imageHtml.push('"></div>');
+    imageHtml.push('<div class="imageDiv" id="');
+    imageHtml.push(imageStruct.key);
+    imageHtml.push('">');
+    imageHtml.push('<table border=0 cellspacing=5 cellpadding=5>');
+	imageHtml.push('<tr>');
+    imageHtml.push('<td>');
+    imageHtml.push(image);
+    imageHtml.push('</td>');
+    imageHtml.push('<td>');
+    imageHtml.push('<br><br>');
+    
+    for (var i = 0; i < labels_array.length; i++) {
+    	imageHtml.push('<div>');
+    	imageHtml.push(labels_array[i]);
+    	imageHtml.push('</div>');
+    	imageHtml.push('<br>');
+    }
+	imageHtml.push('</td>');
+    imageHtml.push('</tr>');
+    imageHtml.push('</table>');
+    imageHtml.push('</div>');
+
+	return imageHtml.join('');
+
+  }
+
+</script>
+
+<body>
+{% include "header.html" %}
+<div align=center id="main">
+  <br/>
+  <span id="pagination"></span>
+  <br/>
+  <br/>
+  <div id="imagescontent"></div>
+</div>
+</body>
+</html>
