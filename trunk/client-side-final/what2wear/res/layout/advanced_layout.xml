@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout 
+	android:id="@+id/LinearLayout01"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+   	<ScrollView android:id="@+id/ScrollView01"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+	
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent" 
+        android:orientation="vertical" >
+		    
+<ImageView 
+		android:id="@+id/title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_alignParentTop="true"
+		android:layout_marginTop ="10px"
+		 />
+		 
+	<TextView
+		android:id="@+id/items_you_chose"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Items you chose: "
+		android:textStyle="bold"
+		android:layout_below="@id/title"
+		android:layout_alignParentLeft="true"
+		/>
+			
+	<TextView
+		android:id="@+id/item1"
+		android:text =""
+		android:layout_width="fill_parent"
+		android:visibility="gone"
+  		android:layout_height="wrap_content"
+  		android:layout_below="@id/items_you_chose"/>
+	 
+	 <TextView
+		android:id="@+id/item2"
+		android:text =""
+		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:visibility="gone"
+  		android:layout_below="@id/item1"/>
+  		
+	 <TextView
+		android:id="@+id/item3"
+		android:text =""
+		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:visibility="gone"
+  		android:layout_below="@id/item2"/>		
+		
+	 <TextView
+    	android:id="@+id/asterix2"
+		android:text="*"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/item3"
+		android:textColor="#f00"
+		/>
+		
+	<Button
+        android:id="@+id/colorBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight = "true"
+        android:layout_marginLeft="25px"
+        android:layout_marginRight="25px"
+        android:layout_below="@id/asterix2"/>
+		
+     <TextView
+    	android:id="@+id/select_title2"
+		android:text="@string/select_color"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/item3"
+		
+		android:layout_marginLeft="180px"
+		/>
+		
+
+        
+    <TextView
+    	android:id="@+id/asterix1"
+		android:text="*"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/item3"
+		android:textColor="#f00"
+		android:layout_alignParentLeft="true"/>
+
+    <TextView
+    	android:id="@+id/select_title1"
+		android:text="@string/select_item"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignTop= "@id/asterix1"
+		android:layout_toRightOf="@id/asterix1"/>
+
+	<Spinner 
+        android:id="@+id/spinner1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/select_item"
+        android:layout_toLeftOf="@id/colorBtn"
+        android:layout_alignBottom="@id/colorBtn"/>
+
+        
+    <Button
+    	android:id="@+id/add_more"
+    	android:background="@drawable/custom_button_add"
+    	android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+    	android:layout_alignParentLeft="true"
+    	android:paddingRight = "5dip"
+    	android:layout_below="@id/spinner1"/>
+    
+    <TextView
+    	android:id="@+id/and_or"
+    	android:text="and/or"
+    	android:textSize="20sp"
+    	android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+    	android:layout_alignParentLeft="true"
+    	android:layout_below="@id/add_more"/>
+    
+       	
+   	  <TextView
+    	android:id="@+id/select_title3"
+		android:text="@string/select_season"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/and_or"
+		android:layout_alignParentLeft="true"/>
+
+   	     
+    <CheckBox
+    	android:id="@+id/summer"
+    	android:layout_width="55px"
+    	android:layout_height="55px"
+    	android:button="@drawable/summer_checkbox"
+    	android:layout_below="@id/select_title3"
+    	android:layout_marginLeft = "30px"
+    	/>
+    	
+    	<CheckBox
+    	android:id="@+id/spring"
+    	android:layout_width="55px"
+    	android:layout_height="55px"
+    	android:layout_below="@id/select_title3"
+    	android:layout_toRightOf="@id/summer"
+    	android:button="@drawable/spring_checkbox"
+    	android:layout_marginLeft = "10px"
+    	/>
+    	
+    	<CheckBox
+    	android:id="@+id/winter"
+    	android:layout_width="55px"
+    	android:layout_height="55px"
+    	android:layout_below="@id/select_title3"
+    	android:layout_toRightOf="@id/spring"
+    	android:button="@drawable/winter_checkbox"
+    	android:layout_marginLeft = "10px"
+    	/>
+    	
+    	<CheckBox
+    	android:id="@+id/autumn"
+    	android:layout_width="55px"
+    	android:layout_height="55px"
+    	android:layout_below="@id/select_title3"
+    	android:layout_toRightOf="@id/winter"
+    	android:button="@drawable/autumn_checkbox"
+    	android:layout_marginLeft = "10px"
+    	/>
+
+    <TextView
+    	android:id="@+id/select_title4"
+		android:text="@string/select_style"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/summer"
+		android:layout_alignParentLeft="true"
+		
+		/>
+
+	<CheckBox
+    	android:id="@+id/casual"
+    	android:layout_width="55px"
+    	android:layout_height="55px"
+    	android:button="@drawable/casual_checkbox"
+    	android:layout_below="@id/select_title4"
+    	android:layout_marginLeft = "50px"
+    	/>
+   	
+   	<CheckBox
+    	android:id="@+id/sport"
+    	android:layout_width="55px"
+    	android:layout_height="55px"
+    	android:layout_below="@id/select_title4"
+    	android:layout_toRightOf="@id/casual"
+    	android:button="@drawable/sport_checkbox"
+    	android:layout_marginLeft = "10px"
+    	/>
+  	
+  	<CheckBox
+    	android:id="@+id/elegant"
+    	android:layout_width="55px"
+    	android:layout_height="55px"
+    	android:layout_below="@id/select_title4"
+    	android:layout_toRightOf="@id/sport"
+    	android:button="@drawable/elegant_checkbox"
+    	android:layout_marginLeft = "10px"
+    	/>
+
+    
+    <Button
+        android:id="@+id/Go"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+    	android:layout_below="@id/casual" />
+
+</RelativeLayout>
+</ScrollView>
+</LinearLayout>
