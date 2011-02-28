@@ -8,14 +8,16 @@
     <supports-screens android:anyDensity="false" />
     <application android:icon="@drawable/our_icon" android:label="@string/app_name">
        <activity android:name=".AndroidList"
-                  android:label="@string/app_name">
+                 android:label="@string/app_name"
+                 android:screenOrientation = "portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".google.OAuthMain"
-			android:launchMode="singleTask">
+			android:launchMode="singleTask"
+			android:screenOrientation = "portrait">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
@@ -23,23 +25,28 @@
 				<data android:scheme="x-what-2-wear" android:host="callback" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".SearchItemActivity"></activity>
-		<activity android:name=".ShowResults"></activity>
-		<activity android:name=".UploadActivity"></activity>
-		<activity android:name=".SearchByWeatherActivity"></activity>
+		<activity android:name=".SearchItemActivity" android:screenOrientation = "portrait"></activity>
+		<activity android:name=".ShowResults" android:screenOrientation = "portrait"></activity>
+		<activity android:name=".UploadActivity" android:screenOrientation = "portrait"></activity>
+		<activity android:name=".SearchByWeatherActivity" android:screenOrientation = "portrait"></activity>
 		<activity android:name=".SigninOptions"
-				  android:theme="@android:style/Theme.Dialog"></activity>
+				  android:theme="@android:style/Theme.Dialog"
+				  android:screenOrientation = "portrait"></activity>
 		<activity android:name=".BigPicDialog"
-				  android:theme="@style/Theme.MyDialog"></activity>
+				  android:theme="@style/Theme.MyDialog"
+				  android:screenOrientation = "portrait"></activity>
 	  	<activity android:name=".Advanced"
-				  android:theme="@style/Theme.MyDialog"></activity>
+				  android:theme="@style/Theme.MyDialog"
+				  android:screenOrientation = "portrait"></activity>
 		<activity android:name=".ColorsDialog"
-				  android:theme="@style/Theme.MyDialog"></activity>
-		<activity android:name=".Top5"></activity>
-		<activity android:name=".ShowMembersResults"></activity>
-		<activity android:name=".MyFriends"></activity>
+				  android:theme="@style/Theme.MyDialog"
+				  android:screenOrientation = "portrait"></activity>
+		<activity android:name=".Top5" android:screenOrientation = "portrait"></activity>
+		<activity android:name=".ShowMembersResults" android:screenOrientation = "portrait"></activity>
+		<activity android:name=".MyFriends" android:screenOrientation = "portrait"></activity>
 		<activity android:name=".Preferences"
-        		  android:label="@string/set_preferences">
+        		  android:label="@string/set_preferences"
+        		  android:screenOrientation = "portrait">
 		</activity>
     </application>
 
